@@ -43,7 +43,7 @@ I will use ChatGPT for research. Research includes finding fitting documentation
 
 
 ## First goal(deadline 31.10):
-* Binary Classification (closed / open hand) using OpenCV and MediaPipe
-* Get familiar with Fusion and KiCad
-* Ask more experienced people about CAD
-* Ask for WEB cam for PC
+* Get MediaPipe and OpenCV working
+* Get familiar with Fusion and KiCad and install them
+* Ask more experienced people about CAD and how to work with software
+* Ask for WEB Cam for PC
