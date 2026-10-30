@@ -1,5 +1,5 @@
 # dowloading model: https://developers.google.com/edge/mediapipe/solutions/vision/hand_landmarker/index#models
-
+import torch
 import cv2 as cv
 import mediapipe as mp
 from mediapipe.tasks.python.vision import HandLandmarksConnections 
@@ -55,9 +55,20 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
                     (255,255,255),1
                 )
         cv.imshow("hand marks", frame)
+        
 
         if cv.waitKey(1) == ord("q"):
             break
+        for hand in result.hand_landmarks:
+            coordiante = []
+            for landmark in hand:
+                coordiante.extend([
+                    landmark.x,
+                    landmark.y,
+                    landmark.z
+                ])
+            x_tensor = torch.Tensor(x)
+            print(x_tensor,)
 
 cap.release()
 cv.destroyAllWindows()
