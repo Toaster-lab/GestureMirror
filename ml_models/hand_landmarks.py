@@ -2,6 +2,7 @@
 
 import cv2 as cv
 import mediapipe as mp
+from mediapipe.tasks.python.vision import HandLandmarksConnections 
 
 model_path = "ml_models/models/hand_landmarker.task"
 
@@ -9,6 +10,7 @@ options = mp.tasks.vision.HandLandmarkerOptions(
     base_options = mp.tasks.BaseOptions(model_asset_path = model_path),
     num_hands = 2
 )
+
 
 cap = cv.VideoCapture(0)
     
@@ -27,6 +29,17 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
             data=rgb
         )
         result = landmarker.detect(mp_image)
+        for hand in result.hand_landmarks:
+            points = []
+            for landmark in hand:
+                x = int(landmark.x * frame.shape[1])
+                y = int(landmark.y * frame.shape[0])
+                points.append((x,y))
+            for connection in HandLandmarksConnections.HAND_CONNECTIONS:
+                cv.line(frame, points[connection.start],
+                        points[connection.end], (0, 255, 0), 2)
+            for point in points:
+                cv.circle(frame, point, 5, (0,0,255), -1)
 
         height, width, _ = frame.shape
 
@@ -35,7 +48,7 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
                 x = int(point.x * width)
                 y = int(point.y * height)
 
-                cv.circle(frame, (x,y), 5, (0,255,0), -1)
+                cv.circle(frame, (x,y), 5, (0,0,255), -1)
                 cv.putText(
                     frame, str(i), (x + 5, y - 5),
                     cv.FONT_HERSHEY_SIMPLEX, 0.4,
