@@ -67,8 +67,9 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
                     landmark.y,
                     landmark.z
                 ])
-            x_tensor = torch.Tensor(x)
-            print(x_tensor,)
+            tensor = torch.tensor(coordiante, dtype=torch.float32)
 
 cap.release()
 cv.destroyAllWindows()
+
+print(tensor)

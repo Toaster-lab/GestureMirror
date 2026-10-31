@@ -18,3 +18,10 @@ I am gonna note down a To Do list for each day
 * make a baseline model that can classify between open and closed hand -> doesnt need to be polished yet!
 * make dev log 
 -> estimate 2.5 hours: learn a lot!
+What I actually did:
+I wanted to get into more the mechanical part and started with looking up how other people design like a robotic hand.
+I made a small prototype that represents a signle joint.
+
+## 1.11
+* Learn more about PyTorch and write the first code for the binary classification
+* Read through research paper on bionic hands
