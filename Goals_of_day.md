@@ -23,5 +23,29 @@ I wanted to get into more the mechanical part and started with looking up how ot
 I made a small prototype that represents a signle joint.
 
 ## 1.11
-* Learn more about PyTorch and write the first code for the binary classification
-* Read through research paper on bionic hands
+* Learn more about PyTorch and write the first code for the binary classification - done
+
+* Read through research paper on bionic hands - done
+Notes:
+Why is looking at biomimetic robotic hands interesting?
+We try to mimic the hand for its dexterity and special functions so we can use that for our own design.
+Bound to the unique biomechanical characteristics.
+human-level dexterity
+The ROM at each finger joint is restricted by the length
+of ligaments
+extensor tendons
+ intrinsic muscles
+ extensor hood
+finger’s ROM is controlled
+in between full flexion and extension postures
+the variable joint stiffness
+is regulated by the gliding mechanism of the extensor hood
+ matching the kinematics of the robotic hand
+to its human counterpart is important for the success of
+teleoperation tasks.
+
+## 2.11
+School again...
+Just try to study 1 hour atleast and most importently write a dev log!!
+* dev log
+* program
