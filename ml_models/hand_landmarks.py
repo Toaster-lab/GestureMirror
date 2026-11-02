@@ -11,7 +11,8 @@ options = mp.tasks.vision.HandLandmarkerOptions(
     num_hands = 2
 )
 
-
+file_name = 'ml_models/tensor.pt'
+key_to_save = 's'
 cap = cv.VideoCapture(0)
     
 #opening cam
@@ -54,11 +55,7 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
                     cv.FONT_HERSHEY_SIMPLEX, 0.4,
                     (255,255,255),1
                 )
-        cv.imshow("hand marks", frame)
-        
 
-        if cv.waitKey(1) == ord("q"):
-            break
         for hand in result.hand_landmarks:
             coordiante = []
             for landmark in hand:
@@ -69,7 +66,17 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
                 ])
             tensor = torch.tensor(coordiante, dtype=torch.float32)
 
+        cv.imshow("hand marks", frame)
+        if cv.waitKey(1) == ord("q"):
+            break
+        if cv.waitKey(1) == ord('s'):
+            tensor = tensor.flatten()
+            tensor = torch.cat((tensor, torch.tensor([1.0]))) # we are adding a one, so we can say it f. e. a closed hand
+            torch.save(tensor,file_name)
+            print("Saved successfully!")
+
 cap.release()
 cv.destroyAllWindows()
 
-print(tensor)
+print(tensor.shape)
+#Problem: torch.save overwrites file, so we need to load the saved tensors and add the new ones to them!
