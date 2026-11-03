@@ -49,3 +49,6 @@ School again...
 Just try to study 1 hour atleast and most importently write a dev log!!
 * dev log
 * program
+
+## 4.11
+* collect data or think of how to collect data (open/closed hand)
