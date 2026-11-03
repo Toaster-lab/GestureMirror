@@ -12,4 +12,9 @@ def extending_loaded_tensor(loaded_tensor_file, added_tensor):
     print(added_tensor, new_tensor)
 
 
-reading_tensor(file_name=file_name)
+import torch
+import os
+
+file_name = r"ml_models\tensor.pt"
+
+print(os.path.getsize(file_name))
