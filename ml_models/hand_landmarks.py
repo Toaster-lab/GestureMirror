@@ -16,6 +16,7 @@ key_to_save = 's' #not used
 cap = cv.VideoCapture(0)
 loaded_tensor = torch.load(file_name, weights_only=True)
 new_tensors = []
+
 #opening cam
 with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
     while True:
@@ -68,24 +69,32 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
             tensor = torch.tensor(coordiante, dtype=torch.float32)
 
         cv.imshow("hand marks", frame)
-        if cv.waitKey(1) == ord('s'):
+        key = cv.waitKey(1)
+        if key ==ord('x'):
             tensor = tensor.flatten()
             tensor = torch.cat((tensor, torch.tensor([1.0]))) # we are adding a one, so we can say it f. e. a closed hand 
             new_tensors.append(tensor)
-            print("Saved successfully!")
+            print("Saved successfully! : open hand")
             print(tensor.shape) # expected: 64 - true
-        if cv.waitKey(1) == ord("q"):
+        if key ==ord('z'):
+            tensor = tensor.flatten()
+            tensor = torch.cat((tensor, torch.tensor([0.0]))) # we are adding a one, so we can say it f. e. a closed hand 
+            new_tensors.append(tensor)
+            print("Saved successfully! : closed hand")
+            print(tensor.shape) # expected: 64 - true
+        if key == ord("q"):
             break
         
 
 cap.release()
 cv.destroyAllWindows()
 
-print(tensor.shape) # 63
 #Problem: torch.save overwrites file, so we need to load the saved tensors and add the new ones to them!
-saved_tensors = torch.stack(new_tensors)
-if not loaded_tensor.numel() == 0:
-    saved_tensors = torch.cat((loaded_tensor, saved_tensors), dim=0)
-else:
-    pass
+if new_tensors:
+    if not loaded_tensor.numel() == 0:
+        saved_tensors = torch.stack(new_tensors)
+        loaded_tensor = loaded_tensor.reshape(-1, 64)
+        saved_tensors = torch.cat((loaded_tensor, saved_tensors), dim=0)
+
 torch.save(saved_tensors, file_name)
+print('saved sucessfully')

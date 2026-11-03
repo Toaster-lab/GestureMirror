@@ -12,4 +12,4 @@ def extending_loaded_tensor(loaded_tensor_file, added_tensor):
     print(added_tensor, new_tensor)
 
 
-extending_loaded_tensor(file_name, tensor)
+reading_tensor(file_name=file_name)
