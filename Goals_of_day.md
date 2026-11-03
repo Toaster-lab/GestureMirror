@@ -50,5 +50,7 @@ Just try to study 1 hour atleast and most importently write a dev log!!
 * dev log
 * program
 
-## 4.11
-* collect data or think of how to collect data (open/closed hand)
+## 4.11 
+*  fix broken data
+* collect new one 
+* implement data spliting into new program
