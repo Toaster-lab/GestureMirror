@@ -4,14 +4,14 @@ import cv2 as cv
 import mediapipe as mp
 from mediapipe.tasks.python.vision import HandLandmarksConnections 
 
-model_path = "ml_models/models/hand_landmarker.task"
+model_path = r"ml_models\models\hand_landmarker.task"
 
 options = mp.tasks.vision.HandLandmarkerOptions(
     base_options = mp.tasks.BaseOptions(model_asset_path = model_path),
     num_hands = 2
 )
 
-file_name = 'ml_models/tensor.pt'
+file_name = r'ml_models\tensor.pt'
 key_to_save = 's' #not used
 cap = cv.VideoCapture(0)
 loaded_tensor = torch.load(file_name, weights_only=True)
@@ -89,12 +89,13 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
 cap.release()
 cv.destroyAllWindows()
 
-#Problem: torch.save overwrites file, so we need to load the saved tensors and add the new ones to them!
+# Problem: torch.save overwrites file, so we need to load the saved tensors and add the new ones to them!
 if new_tensors:
+    saved_tensors = torch.stack(new_tensors)
+
     if not loaded_tensor.numel() == 0:
-        saved_tensors = torch.stack(new_tensors)
         loaded_tensor = loaded_tensor.reshape(-1, 64)
         saved_tensors = torch.cat((loaded_tensor, saved_tensors), dim=0)
 
-torch.save(saved_tensors, file_name)
-print('saved sucessfully')
+    torch.save(saved_tensors, file_name)
+    print('saved successfully')
