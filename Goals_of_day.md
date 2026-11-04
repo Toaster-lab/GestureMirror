@@ -51,6 +51,12 @@ Just try to study 1 hour atleast and most importently write a dev log!!
 * program
 
 ## 4.11 
-*  fix broken data
+*  fix broken data - done?
 * collect new one 
 * implement data spliting into new program
+Why did the data corrupt? : unstable wifi, merge conflicts and incorrect saving logic in my program could all be reasons!
+
+## 5.11
+* collect data : making it more diverse
+* make that the model uses batch-sizes and improve the prediction model in generall 
+* think of what to do more -> computer side of things!

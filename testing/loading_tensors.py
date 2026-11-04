@@ -1,6 +1,6 @@
 import torch
 
-file_name = r'ml_models\tensor.pt'
+file_name = r'testing\testing_tensor.pt'
 tensor = torch.tensor([])
 def reading_tensor(file_name):
     torch.save(tensor, file_name)

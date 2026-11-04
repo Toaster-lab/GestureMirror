@@ -4,7 +4,7 @@ example_tensor1 = torch.tensor([[1,2,3],[4,5,6]])
 
 #print(example_tensor1.shape)
 
-file_name_example = 'ml_models/tensor.pt'
+file_name_example = 'main/tensor.pt'
 
 def saving_string(file_name, example_tensor):
     with open(file_name, 'w') as file:

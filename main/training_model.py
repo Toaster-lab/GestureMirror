@@ -2,7 +2,7 @@ import torch
 from torch import nn
 
 #loading data:
-data_file = r'ml_models\tensor.pt'
+data_file = r'main\tensor.pt'
 data = torch.load(data_file, weights_only=True)
 X = data[:, :-1]
 y = data[:, -1:]
@@ -45,5 +45,12 @@ def trainingRun():
         loss = single_iteration()
         if i % 100 == 0:
             print(f'iteration: {i} loss: {loss}')
+    torch.save(model.state_dict(), r"main\model.pth")
+    print('saved!')
 
-trainingRun()
+if __name__ == "__main__":
+    trainingRun()
+
+# Problems: -it needs contrast
+#           -hand rotation -> closed hand always
+#           -distance of hand to cam / cam quality
