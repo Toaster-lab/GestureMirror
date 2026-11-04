@@ -49,3 +49,8 @@ School again...
 Just try to study 1 hour atleast and most importently write a dev log!!
 * dev log
 * program
+
+## 4.11 
+*  fix broken data
+* collect new one 
+* implement data spliting into new program
