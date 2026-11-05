@@ -69,10 +69,12 @@ def main():
         loss = single_iteration()
         if i % 50 == 0:
             train_acc = accuracy(train_loader)
-            print(f'loss: {loss:.3f}')
+            print(f'validation loss: {loss:.3f}')
             print(f'train accuracy: {train_acc:.3f}')
             test_acc = accuracy(test_loader)
             print(f'train accuracy: {test_acc:.3f}')
+    torch.save(model.state_dict(), r"main\modelV2.pth")
+    print('saved!')
 
 
 if __name__ == "__main__":
