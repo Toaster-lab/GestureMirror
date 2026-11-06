@@ -60,3 +60,9 @@ Why did the data corrupt? : unstable wifi, merge conflicts and incorrect saving 
 * collect data : making it more diverse
 * make that the model uses batch-sizes and improve the prediction model in generall 
 * think of what to do more -> computer side of things!
+
+## 7.11
+* Set up 3D printer
+* learn Onshape
+* think about and read research papers on how to improve model
+* make first 3D print 
