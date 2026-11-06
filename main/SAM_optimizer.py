@@ -21,7 +21,7 @@ test_data = TensorDataset(X_test, y_test)
 train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
 test_loader = DataLoader(test_data, batch_size=batch_size)
 
-class SGDClassification(nn.Module):
+class SAMClassification(nn.Module):
     def __init__(self):
         super().__init__()
         self.network = nn.Sequential(
@@ -34,30 +34,27 @@ class SGDClassification(nn.Module):
     def forward(self, x):
         return self.network(x)
 
-model = SGDClassification()
+model = SAMClassification()
 log_loss = nn.BCEWithLogitsLoss()
 
 learning_rate = 1e-1
-optimizer = torch.optim.SGD(
-    model.parameters(),
-    lr=learning_rate
-)
-# terminal: pip3 install sam-pytorch
+
+# terminal: pip3 install sam-pytorch -- I am using sam.py
 from sam import SAM
-optimizer = SAM(model.parameters(), optimizer)
+optimizer = SAM(model.parameters(), torch.optim.SGD, lr=learning_rate)
+
 
 
 def single_iteration():
-    # this is written by AI, I need to look more into how to use SAM !!! just wanted to see if it would work better
     for X_train, y_train in train_loader:
-        def closure():
-            prediction = model(X_train)
-            loss = log_loss(prediction.squeeze(1), y_train)
-            optimizer.zero_grad()
-            loss.backward()
-            return loss
-        loss = optimizer.step(closure)
+        prediction = model(X_train)
+        loss = log_loss(prediction.squeeze(1), y_train)
+        loss.backward()
+        optimizer.first_step(zero_grad=True)
+        log_loss(model(X_train).squeeze(1), y_train).backward()
+        optimizer.second_step(zero_grad=True)
     return loss.item()
+   
 
 def accuracy(loader):
     correct = 0
@@ -70,7 +67,7 @@ def accuracy(loader):
             total += y_batch.size(0)
     return correct / total
 
-amount_epochs = 250
+amount_epochs = 300
 def main():
     for i in range(amount_epochs):
         loss = single_iteration()
@@ -80,6 +77,8 @@ def main():
             print(f'train accuracy: {train_acc:.3f}')
             test_acc = accuracy(test_loader)
             print(f'train accuracy: {test_acc:.3f}')
+    torch.save(model.state_dict(), r"main\modelSAM.pth")
+    print('saved!')
 
 
 if __name__ == "__main__":
