@@ -5,7 +5,7 @@ from torch.utils.data import TensorDataset, DataLoader
 
 # loading data:
 data_path = r'main\tensor.pt'
-batch_size = 4
+batch_size = 32
 data = torch.load(data_path, weights_only=True)
 X = data[:, :-1]
 y = data[:, -1]
@@ -26,8 +26,10 @@ class SAMClassification(nn.Module):
         super().__init__()
         self.network = nn.Sequential(
             nn.Linear(63, 32),
+            nn.BatchNorm1d(32),
             nn.ReLU(),
             nn.Linear(32, 16),
+            nn.BatchNorm1d(16),
             nn.ReLU(),
             nn.Linear(16, 1)
         )
@@ -66,19 +68,36 @@ def accuracy(loader):
             correct += (predicted == y_batch).sum().item()
             total += y_batch.size(0)
     return correct / total
+from torchmetrics.classification import BinaryCalibrationError
+
+def ece(loader, amount_of_bins):
+    metric = BinaryCalibrationError(n_bins=amount_of_bins, norm='l1')
+    model.eval()
+    with torch.no_grad():
+        for X_batch, y_batch in loader:
+            probabilty_ece = torch.sigmoid(model(X_batch).squeeze(1))
+            metric.update(probabilty_ece, y_batch.long())
+    model.train()
+    return metric.compute().item()
+
 
 amount_epochs = 300
 def main():
     for i in range(amount_epochs):
         loss = single_iteration()
         if i % 50 == 0:
+            ece_calibration = ece(train_loader, 15)
             train_acc = accuracy(train_loader)
+            print(f'iteration: {i}')
             print(f'validation loss: {loss:.3f}')
             print(f'train accuracy: {train_acc:.3f}')
             test_acc = accuracy(test_loader)
-            print(f'train accuracy: {test_acc:.3f}')
-    torch.save(model.state_dict(), r"main\modelSAM.pth")
-    print('saved!')
+            print(f'test accuracy: {test_acc:.3f}')
+            print(f'ece: {ece_calibration:.3f}')
+            print("\n")
+    if test_acc >= 0.96:
+        torch.save(model.state_dict(), r"main\modelSAM.pth")
+        print('saved!')
 
 
 if __name__ == "__main__":

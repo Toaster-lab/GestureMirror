@@ -6,16 +6,16 @@ import mediapipe as mp
 from mediapipe.tasks.python.vision import HandLandmarksConnections 
 
 #initalizing model:
-from training_modelV2 import SGDClassification
-model_path = r"main\modelV2.pth"
-model = SGDClassification()
+from training_model import HandNN
+model_path = r"model_versions\model.pth"
+model = HandNN()
 model.load_state_dict(torch.load(model_path, weights_only=True))
 model.eval()
 print('loaded succesfully')
 
 #Paths
-model_path = r'main\models\hand_landmarker.task'
-file_name = r'main\tensor.pt'
+model_path = r'model_versions\models\hand_landmarker.task'
+file_name = r'model_versions\tensor.pt'
 
 #Tensors
 loaded_tensor = torch.load(file_name, weights_only=True)

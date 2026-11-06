@@ -4,7 +4,7 @@ from sklearn.model_selection import train_test_split
 from torch.utils.data import TensorDataset, DataLoader
 
 # loading data:
-data_path = r'main\tensor.pt'
+data_path = r'model_versions\tensor.pt'
 batch_size = 4
 data = torch.load(data_path, weights_only=True)
 X = data[:, :-1]
@@ -73,7 +73,7 @@ def main():
             print(f'train accuracy: {train_acc:.3f}')
             test_acc = accuracy(test_loader)
             print(f'train accuracy: {test_acc:.3f}')
-    torch.save(model.state_dict(), r"main\modelV2.pth")
+    torch.save(model.state_dict(), r"model_versions\modelV2.pth")
     print('saved!')
 
 

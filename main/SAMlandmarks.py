@@ -66,7 +66,7 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
                     frame, str(i), (x + 5, y - 5),
                     cv.FONT_HERSHEY_PLAIN, 0.3,
                     (255,255,255),1)
-        
+
         tensor  = None 
         for hand in result.hand_landmarks:
             coordiante = []

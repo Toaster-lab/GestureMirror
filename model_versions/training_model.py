@@ -2,7 +2,7 @@ import torch
 from torch import nn
 
 #loading data:
-data_file = r'main\tensor.pt'
+data_file = r'model_versions\tensor.pt'
 data = torch.load(data_file, weights_only=True)
 X = data[:, :-1]
 y = data[:, -1:]
@@ -45,7 +45,7 @@ def trainingRun():
         loss = single_iteration()
         if i % 100 == 0:
             print(f'iteration: {i} loss: {loss}')
-    torch.save(model.state_dict(), r"main\model.pth")
+    torch.save(model.state_dict(), r"model_versions\model.pth")
     print('saved!')
 
 if __name__ == "__main__":
