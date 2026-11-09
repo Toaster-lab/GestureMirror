@@ -20,7 +20,7 @@ test_data = TensorDataset(X_test, y_test)
 
 train_loader = DataLoader(train_data, batch_size=batch_size, shuffle=True)
 test_loader = DataLoader(test_data, batch_size=batch_size)
-
+dropout_chance = 0.2
 class SAMClassification(nn.Module):
     def __init__(self):
         super().__init__()
@@ -28,6 +28,7 @@ class SAMClassification(nn.Module):
             nn.Linear(63, 32),
             nn.BatchNorm1d(32),
             nn.ReLU(),
+            #nn.Dropout(p=dropout_chance),
             nn.Linear(32, 16),
             nn.BatchNorm1d(16),
             nn.ReLU(),
@@ -80,8 +81,11 @@ def ece(loader, amount_of_bins):
     model.train()
     return metric.compute().item()
 
+def save_model():
+    torch.save(model.state_dict(), r"main\modelSAM.pth")
+    print('saved!')
 
-amount_epochs = 300
+amount_epochs = 751
 def main():
     for i in range(amount_epochs):
         loss = single_iteration()
@@ -96,9 +100,7 @@ def main():
             print(f'ece: {ece_calibration:.3f}')
             print("\n")
     if test_acc >= 0.96:
-        torch.save(model.state_dict(), r"main\modelSAM.pth")
-        print('saved!')
-
-
+        save_model()
+        
 if __name__ == "__main__":
     main()

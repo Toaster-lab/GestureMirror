@@ -42,6 +42,13 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
             data=rgb
         )
         result = landmarker.detect(mp_image)
+        for hand_index, hand in enumerate(result.hand_landmarks):
+            handeness = result.handedness[hand_index][0]
+            handeness_string = str(handeness.category_name).lower()
+            cv.putText(
+                frame, handeness_string, (20, 60),
+                cv.FONT_HERSHEY_PLAIN,1,
+                                (22,0,255),3)
         for hand in result.hand_landmarks:
             points = []
             for landmark in hand:
@@ -89,21 +96,21 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
                 cv.FONT_HERSHEY_PLAIN,1,
                 (0,0,255),3)
 
-        cv.imshow("hand marks", frame)
+        cv.imshow("Hand Classification", frame)
         key = cv.waitKey(1)
-        if key ==ord('x'):
+        if key ==ord('x') or key == ord('X'):
             tensor = tensor.flatten()
             tensor = torch.cat((tensor, torch.tensor([1.0]))) # we are adding a one, so we can say it f. e. a open hand 
             new_tensors.append(tensor)
             print("Saved successfully! : open hand")
             print(tensor.shape) # expected: 64 - true - this is just for making sure everything aright
-        if key ==ord('z'):
+        if key ==ord('z') or key==ord('Z'):
             tensor = tensor.flatten()
             tensor = torch.cat((tensor, torch.tensor([0.0]))) # we are adding a zero, so we can say it f. e. a closed hand 
             new_tensors.append(tensor)
             print("Saved successfully! : closed hand")
             print(tensor.shape) # expected: 64 - true
-        if key == ord("q"):
+        if key == ord("q") or key==ord('Q'):
             break
         
 
