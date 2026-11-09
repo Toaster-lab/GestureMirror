@@ -4,7 +4,6 @@ import torch
 import cv2 as cv
 import mediapipe as mp
 from mediapipe.tasks.python.vision import HandLandmarksConnections 
-
 #initalizing model:
 from SAM_optimizer import SAMClassification
 model_path = r"main\modelSAM.pth"
@@ -90,8 +89,10 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
                 percent = predicition.sigmoid()
                 if percent <= 0.35:  # I want it rather when it is unsure to be open then closed
                     percent = "closed"
+                    hand_state = 0
                 else:
                     percent = "open"
+                    hand_state = 1
                 cv.putText(frame, percent, (20,40),
                 cv.FONT_HERSHEY_PLAIN,1,
                 (0,0,255),3)
@@ -112,7 +113,6 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
             print(tensor.shape) # expected: 64 - true
         if key == ord("q") or key==ord('Q'):
             break
-        
 
 cap.release()
 cv.destroyAllWindows()

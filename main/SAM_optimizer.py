@@ -100,7 +100,8 @@ def main():
             print(f'ece: {ece_calibration:.3f}')
             print("\n")
     if test_acc >= 0.96:
-        save_model()
+        pass
+        #save_model()
         
 if __name__ == "__main__":
     main()

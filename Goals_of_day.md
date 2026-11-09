@@ -69,3 +69,6 @@ Why did the data corrupt? : unstable wifi, merge conflicts and incorrect saving 
 
 ## 8.11
 * design first full finger joint system with hooks and all!!
+
+## 9.11
+* pick out motors and parts I need to buy
