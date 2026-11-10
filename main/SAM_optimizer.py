@@ -85,7 +85,7 @@ def save_model():
     torch.save(model.state_dict(), r"main\modelSAM.pth")
     print('saved!')
 
-amount_epochs = 751
+amount_epochs = 251
 def main():
     for i in range(amount_epochs):
         loss = single_iteration()
@@ -100,8 +100,8 @@ def main():
             print(f'ece: {ece_calibration:.3f}')
             print("\n")
     if test_acc >= 0.96:
-        pass
-        #save_model()
+        
+        save_model()
         
 if __name__ == "__main__":
     main()

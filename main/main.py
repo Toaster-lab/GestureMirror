@@ -124,6 +124,10 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
             print("Saved successfully! : closed hand")
             print(tensor.shape) # expected: 64 - true
         if key == ord("q") or key==ord('Q'):
+            #esp.write(b'OPEN\n')
+            print('sent open') 
+            personsHand_open = True
+            roboticHand_open = personsHand_open
             break
         if key == ord("c") or key==ord("C"):
             mirroring_gesture = not mirroring_gesture
