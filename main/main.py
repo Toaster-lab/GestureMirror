@@ -9,9 +9,12 @@ from mediapipe.tasks.python.vision import HandLandmarksConnections
 port : str = "COM9"
 import serial
 import time
-esp = serial.Serial(port, 115200, timeout=2)
+#esp = serial.Serial(port, 115200, timeout=2)
 time.sleep(5) 
 print("Serial opened")
+roboticHand_open : bool = True
+mirroring_gesture : bool = False
+personsHand_open = None
 
 #initalizing model:
 from SAM_optimizer import SAMClassification
@@ -98,10 +101,10 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
                 percent = predicition.sigmoid()
                 if percent <= 0.35:  # I want it rather when it is unsure to be open then closed
                     percent = "closed"
-                    hand_state = 0
+                    personsHand_open : bool = False
                 else:
                     percent = "open"
-                    hand_state = 1
+                    personsHand_open : bool = True
                 cv.putText(frame, percent, (20,40),
                 cv.FONT_HERSHEY_PLAIN,1,
                 (0,0,255),3)
@@ -123,14 +126,19 @@ with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
         if key == ord("q") or key==ord('Q'):
             break
         if key == ord("c") or key==ord("C"):
-            if hand_state == 1:
-                esp.write(b'OPEN\n')
-                print('sent open')
-            elif hand_state == 0:
-                esp.write(b'CLOSED\n')
-                print('sent closed')
-            else:
-                pass
+            mirroring_gesture = not mirroring_gesture
+        if mirroring_gesture == True:
+            if personsHand_open != roboticHand_open:
+                if personsHand_open == True:
+                    #esp.write(b'OPEN\n')
+                    print('sent open')  
+                    roboticHand_open = personsHand_open                  
+                elif personsHand_open == False:
+                    #esp.write(b'CLOSED\n')
+                    print('sent closed')
+                    roboticHand_open = personsHand_open
+                else:
+                    pass
 
 cap.release()
 cv.destroyAllWindows()
