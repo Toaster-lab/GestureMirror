@@ -26,6 +26,8 @@ def load_tensors(file_name):
     return loaded_tensor, new_tensors
 
 def get_prediction(model, tensor, frame):
+    if not tensor.shape == (1, 63):
+        raise AssertionError('Tensor wrong shape')
     with torch.no_grad():
         predicition = model(tensor)
         percent = predicition.sigmoid()
@@ -55,22 +57,24 @@ def saving_coordinates(result):
     return tensor
 def start_capture(pretrained_model):
     cap = cv.VideoCapture(0)
+    if not cap.isOpened() == True:
+        raise('Cam could not open')
     options = mp.tasks.vision.HandLandmarkerOptions(
         base_options = mp.tasks.BaseOptions(model_asset_path = pretrained_model),
         num_hands = 1 #changed to one because it bugged before and for my hand I only need one
     )
     return cap, options
 def setting_serial(serial_port):
+    esp = None
     #esp = serial.Serial(serial_port, 115200, timeout=2)
     time.sleep(5)
     print("Serial opened")
     roboticHand_open : bool = True
     mirroring_gesture : bool = False
     personsHand_open = None
-    return roboticHand_open, mirroring_gesture, personsHand_open
+    return roboticHand_open, mirroring_gesture, personsHand_open, esp
 def getting_results(cap, landmarker):
     ret, frame = cap.read()
-    break_ = False
     if not ret:
         return None, None, True # break
     # camera filter
@@ -122,78 +126,82 @@ def main():
     model = load_model(model_path=model_path)
     # loading tensors
     loaded_tensor, new_tensors = load_tensors(file_name)
-    roboticHand_open, mirroring_gesture, personsHand_open = setting_serial('COM9')
+    roboticHand_open, mirroring_gesture, personsHand_open, esp = setting_serial('COM9')
     # opening capture and defining config for pretrained model
     cap, options = start_capture(pretrained_model_path)
 
     #opening cam
-    with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
-        while True:
-            result, frame, break_ = getting_results(cap, landmarker)
-            if break_:
-                break
-            draw_hand(frame, result)
+    try:
+        with mp.tasks.vision.HandLandmarker.create_from_options(options) as landmarker:
+            while True:
+                result, frame, break_ = getting_results(cap, landmarker)
+                if break_:
+                    break
+                draw_hand(frame, result)
 
-            tensor = saving_coordinates(result)
-            if tensor is not None:
-                hand_state = get_prediction(model, tensor, frame)
-                personsHand_open = hand_state
+                tensor = saving_coordinates(result)
+                if tensor is not None:
+                    hand_state = get_prediction(model, tensor, frame)
+                    personsHand_open = hand_state
 
-            cv.imshow("Hand Classification", frame)
-            key = cv.waitKey(1)
-            if key ==ord('x') or key == ord('X'):
-                if tensor is None:
-                    print('No hand detected')
-                else:
-                    tensor = tensor.flatten()
-                    tensor = torch.cat((tensor, torch.tensor([1.0]))) # we are adding a one, so we can say it f. e. a open hand
-                    new_tensors.append(tensor)
-                    print("Saved successfully! : open hand")
-                    print(tensor.shape) # expected: 64 - true - this is just for making sure everything aright
-            if key ==ord('z') or key==ord('Z'):
-                if tensor is None:
-                    print('No hand detected')
-                else:
-                    tensor = tensor.flatten()
-                    tensor = torch.cat((tensor, torch.tensor([0.0]))) # we are adding a zero, so we can say it f. e. a closed hand
-                    new_tensors.append(tensor)
-                    print("Saved successfully! : closed hand")
-                    print(tensor.shape) # expected: 64 - true
-            if key == ord("q") or key==ord('Q'):
-                #esp.write(b'OPEN\n')
-                print('sent open')
-                personsHand_open = True
-                roboticHand_open = personsHand_open
-                break
-            if key == ord("c") or key==ord("C"):
-                mirroring_gesture = not mirroring_gesture
-            if mirroring_gesture == True:
-                if personsHand_open != roboticHand_open:
-                    if personsHand_open == True:
-                        #esp.write(b'OPEN\n')
-                        print('sent open')
-                        roboticHand_open = personsHand_open
-                    elif personsHand_open == False:
-                        #esp.write(b'CLOSED\n')
-                        print('sent closed')
-                        roboticHand_open = personsHand_open
+                cv.imshow("Hand Classification", frame)
+                key = cv.waitKey(1)
+                if key ==ord('x') or key == ord('X'):
+                    if tensor is None:
+                        print('No hand detected')
                     else:
-                        pass
+                        tensor = tensor.flatten()
+                        tensor = torch.cat((tensor, torch.tensor([1.0]))) # we are adding a one, so we can say it f. e. a open hand
+                        new_tensors.append(tensor)
+                        print("Saved successfully! : open hand")
+                        print(tensor.shape) # expected: 64 - true - this is just for making sure everything aright
+                if key ==ord('z') or key==ord('Z'):
+                    if tensor is None:
+                        print('No hand detected')
+                    else:
+                        tensor = tensor.flatten()
+                        tensor = torch.cat((tensor, torch.tensor([0.0]))) # we are adding a zero, so we can say it f. e. a closed hand
+                        new_tensors.append(tensor)
+                        print("Saved successfully! : closed hand")
+                        print(tensor.shape) # expected: 64 - true
+                if key == ord("q") or key==ord('Q'):
+                    #esp.write(b'OPEN\n')
+                    print('sent open')
+                    personsHand_open = True
+                    roboticHand_open = personsHand_open
+                    break
+                if key == ord("c") or key==ord("C"):
+                    mirroring_gesture = not mirroring_gesture
+                if mirroring_gesture == True:
+                    if personsHand_open != roboticHand_open:
+                        if personsHand_open == True:
+                            #esp.write(b'OPEN\n')
+                            print('sent open')
+                            roboticHand_open = personsHand_open
+                        elif personsHand_open == False:
+                            #esp.write(b'CLOSED\n')
+                            print('sent closed')
+                            roboticHand_open = personsHand_open
+                        else:
+                            pass
+                    # this happens when it is None
+    finally:
+        cap.release()
+        cv.destroyAllWindows()
+        if esp is not None:
+            esp.close()
 
-    cap.release()
-    cv.destroyAllWindows()
+        # Problem: torch.save overwrites file, so we need to load the saved tensors and add the new ones to them!
+        #Solution: We load the old tensor, stack the new ones together and then merge them using 'torch.cat'
+        if new_tensors:
+            saved_tensors = torch.stack(new_tensors)
 
-    # Problem: torch.save overwrites file, so we need to load the saved tensors and add the new ones to them!
-    #Solution: We load the old tensor, stack the new ones together and then merge them using 'torch.cat'
-    if new_tensors:
-        saved_tensors = torch.stack(new_tensors)
+            if not loaded_tensor.numel() == 0:
+                loaded_tensor = loaded_tensor.reshape(-1, 64) #making it right size
+                saved_tensors = torch.cat((loaded_tensor, saved_tensors), dim=0) # dim=0 -> new row
 
-        if not loaded_tensor.numel() == 0:
-            loaded_tensor = loaded_tensor.reshape(-1, 64) #making it right size
-            saved_tensors = torch.cat((loaded_tensor, saved_tensors), dim=0) # dim=0 -> new row
-
-        torch.save(saved_tensors, file_name)
-        print('saved successfully')
+            torch.save(saved_tensors, file_name)
+            print('saved successfully')
 
 
 if __name__ == "__main__":
