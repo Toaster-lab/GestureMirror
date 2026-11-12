@@ -9,10 +9,6 @@ import time
 from SAM_optimizer import SAMClassification
 
 
-
-def load_paths(model_path, model, pretrained_model, file_name):
-    return model_path, model, pretrained_model, file_name
-
 def load_model(model_path):
     model = SAMClassification()
     model.load_state_dict(torch.load(model_path, weights_only=True))
@@ -121,7 +117,9 @@ def draw_hand(frame, result):
                 (255,255,255),1)
 def main():
     #loading paths
-    model_path, model, pretrained_model_path, file_name = load_paths(r'main\modelSAM.pth',r'main\modelSAM.pth',r'main\models\hand_landmarker.task',r'main\tensor.pt')
+    model_path = r'software\models\modelSAM.pth'
+    pretrained_model_path = r'software\models\hand_landmarker.task'
+    file_name = r'software\data\tensor.pt'
     # loading model
     model = load_model(model_path=model_path)
     # loading tensors

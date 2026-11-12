@@ -1,0 +1,6 @@
+torch
+torchmetrics
+scikit-learn
+opencv-python
+mediapipe
+pyserial
