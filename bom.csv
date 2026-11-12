@@ -1,12 +1,10 @@
-﻿Item,Quantity,Specs,Purpose,Link,Unit price (CHF),Total (CHF),Already owned,Notes
-ESP32-S3 DevKit,1,ESP32-S3-DevKitC-1,Receives OPEN/CLOSED over serial and drives the servos,https://www.berrybase.ch/espressif-esp32-s3-devkitc-1-development-kit-esp32-s3-wroom-wifi-bluetooth-le-240mhz-5v-3-3v/ram-8mb/flash-16mb,19.75,0.00,yes,Owned and where I bought it a while back
-Micro servo MG90S,5,"Metal gear, 180 degree positional (not continuous), 4.8-6 V, about 2 kg*cm, 23 x 12 x 29 mm",One servo per finger pulls the tendon,https://www.bastelgarage.ch/waveshare-micro-servo-mg90s-with-metal-gear?search=servo%20mg90s,7.90,39.50,no,"5 for each finger,no spares"
-Power supply,1,"5 V DC, 4 A, 20 W, 5.5 x 2.1 mm barrel plug",Powers the servos separately from the ESP32,https://www.conrad.ch/de/p/mean-well-gsm25e05-p1j-steckernetzteil-festspannung-5-v-dc-4-a-20-w-1838021.html,15.95,15.95,no,Servos need external power supply
-DC barrel jack (female),1,"5.5 x 2.1 mm female socket with screw terminals",Connects the power supply to the board,https://www.galaxus.ch/en/s1/product/purecrea-dc-buchse-female-barrel-jack-55mm-21mm-mit-schraubklemmen-cables-plugs-34239719,9.90,9.90,no,To connect breadboard to powersupply
-Electrolytic capacitor,1,"1000 uF, 10 V or higher",Smooths current spikes on the servo supply,https://www.digitec.ch/de/s1/product/purecrea-elektrolyt-kondensator-1000-f-25-v-kondensator-passive-bauelemente-36133402,5.90,5.90,no,Place across 5 V and GND near the servos
-braided line,1,None,Tendons that close the fingers,None,-,-,Yes,I already have string that matches what I need but I never bought that myself so idk price and stuff
-Elastic cord,1,"Round, 1-2 mm diameter",Returns the fingers to open,https://www.galaxus.ch/en/s12/product/creativ-company-elastic-band-set-1-mm-craft-tape-craft-twine-10079047,6.00,6.00,no,
-breadboard,1,normal breadboard,connect wires,https://www.bastelgarage.ch/breadboard-hole-grid-plug-in-board-half-size?search=breadboard,4.90,4.90,No,
-PETG filament,1,"1.75 mm, 1 kg",Printing the fingers and palm,https://www.galaxus.ch/en/s1/product/bambu-lab-petg-matt-refill-black-175mm-petg-175-mm-3d-printer-filament-78471628,16.50,16.50,no,I do not have PETG filament but already have a spool
-,,,,,,,,
-,,,,,Total (CHF),98.65,,
+﻿Item Name,Quantity,Link link,Total (CHF),Already owned,Notes
+ESP32-S3 DevKit,1,https://www.berrybase.ch/espressif-esp32-s3-devkitc-1-development-kit-esp32-s3-wroom-wifi-bluetooth-le-240mhz-5v-3-3v/ram-8mb/flash-16mb,0,yes,Owned and where I bought it a while back
+Micro servo MG90S,5,https://www.bastelgarage.ch/waveshare-micro-servo-mg90s-with-metal-gear?search=servo%20mg90s,39.5,no,"5 for each finger,no spares"
+Power supply,1,https://www.conrad.ch/de/p/mean-well-gsm25e05-p1j-steckernetzteil-festspannung-5-v-dc-4-a-20-w-1838021.html,15.95,no,Servos need external power supply
+DC barrel jack (female),1,https://www.galaxus.ch/en/s1/product/purecrea-dc-buchse-female-barrel-jack-55mm-21mm-mit-schraubklemmen-cables-plugs-34239719,9.9,no,To connect breadboard to powersupply
+Electrolytic capacitor,1,https://www.digitec.ch/de/s1/product/purecrea-elektrolyt-kondensator-1000-f-25-v-kondensator-passive-bauelemente-36133402,5.9,no,Place across 5 V and GND near the servos
+braided line,1,None,-,Yes,I already have string that matches what I need but I never bought that myself so idk price and stuff
+Elastic cord,1,https://www.galaxus.ch/en/s12/product/creativ-company-elastic-band-set-1-mm-craft-tape-craft-twine-10079047,6,no,
+breadboard,1,https://www.bastelgarage.ch/breadboard-hole-grid-plug-in-board-half-size?search=breadboard,4.9,No,I need a smaller breadboard to connect all my components
+PETG filament,1,https://www.galaxus.ch/en/s1/product/bambu-lab-petg-matt-refill-black-175mm-petg-175-mm-3d-printer-filament-78471628,16.5,no,I do not have PETG filament but already have a spool
