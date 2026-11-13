@@ -21,12 +21,14 @@ git clone https://github.com/Toaster-lab/GestureMirror
 pip install -r software/requirements.txt
 ```
 
-5. Start the main program (might take a bit on the first time)
+5. Start the main program 
 ```bash
 python software\main.py
 ```
 How to use main.py? See: [How to use the main.py](docs\main_guide.md)
+
 Model limitations? See: [Model limitations](docs\model_limitations.md)
+
 You can just experiment with this if you want without the robotic hand!
 
 ## Why did I make this?

@@ -52,7 +52,7 @@ def saving_coordinates(result):
         tensor = tensor.unsqueeze(0)
     return tensor
 def start_capture(pretrained_model):
-    cap = cv.VideoCapture(0)
+    cap = cv.VideoCapture(0)  # CAMERA INDEX, MAYBE NEED TO CHANGE
     if not cap.isOpened() == True:
         raise('Cam could not open')
     options = mp.tasks.vision.HandLandmarkerOptions(
@@ -170,6 +170,7 @@ def main():
                     break
                 if key == ord("c") or key==ord("C"):
                     mirroring_gesture = not mirroring_gesture
+                    print(f"Mirroring toggled: {'ON' if mirroring_gesture else 'OFF'}")
                 if mirroring_gesture == True:
                     if personsHand_open != roboticHand_open:
                         if personsHand_open == True:
@@ -182,7 +183,8 @@ def main():
                             roboticHand_open = personsHand_open
                         else:
                             pass
-                    # this happens when it is None
+                        # this happens when hand state is None
+
     finally:
         cap.release()
         cv.destroyAllWindows()
