@@ -6,10 +6,10 @@ This project was made using Onshape on the CAD side of things, there where many 
 
 ## How to use this
 1. Build the robotic hand
-see: [assembling robotic hand](docs\assembly.md)
+see: [assembling robotic hand](docs/assembly.md)
 
 2. Upload the firmware to esp32
-see: [uploading firmware](docs\firmware_upload.md)
+see: [uploading firmware](docs/firmware_upload.md)
 
 3. Clone the source code to your device
 ```bash
@@ -23,11 +23,11 @@ pip install -r software/requirements.txt
 
 5. Start the main program 
 ```bash
-python software\main.py
+python software/main.py
 ```
-How to use main.py? See: [How to use the main.py](docs\main_guide.md)
+How to use main.py? See: [How to use the main.py](docs/main_guide.md)
 
-Model limitations? See: [Model limitations](docs\model_limitations.md)
+Model limitations? See: [Model limitations](docs/model_limitations.md)
 
 You can just experiment with this if you want without the robotic hand!
 

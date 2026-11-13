@@ -63,7 +63,7 @@ def start_capture(pretrained_model):
 def setting_serial(serial_port):
     esp = None
     #esp = serial.Serial(serial_port, 115200, timeout=2)
-    time.sleep(5)
+    time.sleep(3)
     print("Serial opened")
     roboticHand_open : bool = True
     mirroring_gesture : bool = False
