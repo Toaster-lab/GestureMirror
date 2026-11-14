@@ -1,13 +1,13 @@
 # How to use the main program
-To run main program 
+To run main program, copy in terminal
 ```bash
 python software/main.py
 ```
 ## Before you start
 * Webcam is connected and working
-* Dependencies installed from step 4 in README.md
-* Optional: ESP32 and robotic hand connected and ready. The Serial connection is *commented out*! Enable Serial by removing the '#' infront of the Serial lines. Lines affected: 65, 166, 177 and 181 all need to be enabled!!
-* Set the right Serial port on line 127
+* Dependencies are all installed from step 4 in README.md
+* Optional: ESP32 and robotic hand are connected and ready. *Warning:* The Serial connection is *commented out*! Enable Serial by removing the '#' infront of the Serial lines. Lines affected: 65, 166, 177 and 181 all need to be enabled!!
+* Set the right Serial port on line 127, standard 'COM9'
 
 ## What you see
 * Hand skeleton: MediaPipe model sets landmarks
@@ -32,9 +32,9 @@ Q   | Quit camera and resets hand to open
 ## Adding your own training data
 1. When running main, use the corresponding keys to save open / closed hands into the file: [Here is the data saved to](../software/data/tensor.pt) 
 Make sure you are really using the right key for the hand state you want to save or else the model is training on wrong data!
-You need to quit with pressing 'q' to actually save the tensors!!
+You need to quit with pressing 'q' to actually save the tensors into the file!!
 
-2. To retrain the model on new data just run SAM_optimizer: [This file :)](../software/SAM_optimizer.py) You need a certain test accuracy to actually save the model, this is hard coded and can be changed on line 102!
+2. To retrain the model on new data just run SAM_optimizer: [This file :)](../software/SAM_optimizer.py) You need a certain test accuracy to actually save the model, this is hard coded and can be changed on line 102. It needs to be 0.96 or more!
 The model parameters are saved here: [Model parameters](../software/models/modelSAM.pth)
 
 ## Useful details
@@ -45,7 +45,7 @@ The model parameters are saved here: [Model parameters](../software/models/model
 * The start up pauses for 3 seconds to give time to the ESP32
 
 ## Troubleshooting
-* 'No hand detected' when saving -> hand not detected in camera's view
+* 'No hand detected' when saving -> hand not detected in camera's view, so nothing to save
 * Camera doesn't open -> camera not available or you need to change camera index on line 55!!
 * Serial error -> wrong COM or ESP32 not available
 * Poor accuracy -> See: [Model limitations](model_limitations.md)
