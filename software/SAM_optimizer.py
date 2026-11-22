@@ -85,7 +85,7 @@ def save_model():
     torch.save(model.state_dict(), r"software\models\modelSAM.pth")
     print('saved!')
 
-amount_epochs = 251
+amount_epochs = 501
 def main():
     for i in range(amount_epochs):
         loss = single_iteration()
