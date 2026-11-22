@@ -1,15 +1,20 @@
 # Gesture Mirror
 My program predicts your gesture, currently only open and closed, and mirrors that onto a robotic hand.
 
+![alt text](cad/photos/image.png)
+
+
 ## How it was made
-This project was made using Onshape on the CAD side of things, there where many research papers read about maschine learning to apply that to my own model and the core software is Python and C++ for the ESP32 control.
+This project was made using Onshape on the CAD side of things, there where many research papers read about maschine learning to apply that to my own model and the core software is Python and C++ for the ESP32 control. 
+
+*IMPORTANT:* sam.py is from davda54/sam (MIT)
 
 ## How to use this
 1. Build the robotic hand
-see: [assembling robotic hand](docs/assembly.md)
+see: [assembling robotic hand](docs/assembly.md) NOT DONE
 
 2. Upload the firmware to esp32
-see: [uploading firmware](docs/firmware_upload.md)
+see: [uploading firmware](docs/firmware_upload.md) NOT DONE
 
 3. Clone the source code to your device
 ```bash
@@ -38,6 +43,8 @@ You can just experiment with this if you want without the robotic hand!
 * I saw so many people build these robotic / bionic hands and thought to myself, could I do that? So I tried! I thought something like this was impossible but through trying my best, most things are possible.
 * I want to take this and work on it from time to time, not as intense as now, but I can always comeback and improve things. Changing how the hand is controlled, the design of the hand and maybe making a real bionic hand!
 
+## Wiring diagram
+![alt text](cad/photos/wiring_diagram.png)
 
 ## AI DISCLOSURE
-I used AI for research, learning faster, feedback and helping with file paths. For example instead of searching for the proper documentation on something I am trying to learn / fix, I ask Claude to help me understand the Error message and give me in one of my cases, the real documentation of PyTorch of this topic so I can fix this myself. Code or text was NOT written with AI, I only used it for checking my grammar in the documentation! AI was used once for the math side of things when designing the hand, I did not know how I can know what the ROM is on the finger, so I needed help! Using AI responsible and not just vibe coding was a big goal of this project and coding is way more fun!
+I used AI for research, learning faster, feedback and helping with file paths. For example instead of searching for the proper documentation on something I am trying to learn / fix, I ask Claude to help me understand the Error message and give me in one of my cases, the real documentation of PyTorch of this topic so I can fix this myself. Code or text was NOT written with AI. AI was used for the math side of things when designing the hand! Using AI responsible and not just vibe coding was a big goal of this project and coding is way more fun  by hand! I also used AI to help me with measurements, it was my first CAD project and sometimes was really stuck just on the measurements and it helped me move forward.

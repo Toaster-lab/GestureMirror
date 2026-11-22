@@ -54,7 +54,7 @@ def saving_coordinates(result):
 def start_capture(pretrained_model):
     cap = cv.VideoCapture(0)  # CAMERA INDEX, MAYBE NEED TO CHANGE
     if not cap.isOpened() == True:
-        raise('Cam could not open')
+        raise RuntimeError('Cam could not open')
     options = mp.tasks.vision.HandLandmarkerOptions(
         base_options = mp.tasks.BaseOptions(model_asset_path = pretrained_model),
         num_hands = 1 #changed to one because it bugged before and for my hand I only need one
