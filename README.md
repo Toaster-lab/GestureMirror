@@ -4,7 +4,7 @@ My program predicts your gesture, currently only open and closed, and mirrors th
 ![alt text](cad/photos/image.png)
 
 ## CAD
-* Onshape source (full assembly): https://cad.onshape.com/documents/99f95db162691b3338d57be9/w/9e07927d1d81c1273d6c15ce/e/b8d432711753583c9f4cbdb4
+* Onshape source (full assembly): [Gesture Mirror on Onshape](https://cad.onshape.com/documents/99f95db162691b3338d57be9/w/9e07927d1d81c1273d6c15ce/e/b8d432711753583c9f4cbdb4)
 * STEP files: [cad/step](cad/step)
 
 ## How it was made
