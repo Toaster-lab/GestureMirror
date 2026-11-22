@@ -3,6 +3,10 @@ My program predicts your gesture, currently only open and closed, and mirrors th
 
 ![alt text](cad/photos/image.png)
 
+
+## Cost
+Total build cost: *130.90 USD* (see [bom.csv](bom.csv), parts I own is 0)
+
 ## CAD
 * Onshape source (full assembly): [Gesture Mirror on Onshape](https://cad.onshape.com/documents/99f95db162691b3338d57be9/w/9e07927d1d81c1273d6c15ce/e/b8d432711753583c9f4cbdb4)
 * STEP files: [cad/step](cad/step)
