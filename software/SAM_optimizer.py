@@ -1,5 +1,3 @@
-# SAM optimizer by David Samuel, https://github.com/davda54/sam
-# MIT License, Copyright (c) 2021 David Samuel
 import torch
 import torch.nn as nn
 from sklearn.model_selection import train_test_split

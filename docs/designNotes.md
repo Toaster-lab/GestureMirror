@@ -16,6 +16,3 @@
 * Spool attached to servo to roll up string
 * Spool radius = String needed / PI
 
-### TO-DO:
-* braided line missing in bom.csv
-* we have to take in account how much string is needed to close the finger
