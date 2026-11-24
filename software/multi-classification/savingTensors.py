@@ -1,5 +1,5 @@
 # Pipeline: load saved tensors -> open camera -> show hand landmarks -> save tensor with label on keypress
-# Keys: x = save as open hand (1), z = save as closed hand (0), q = quit and write file
+# Keys: z=open, x=closed, c=thumb_up, v=peace, b=ok, n=point, m=three, ,=None, q = quit and write file
 
 #dependecies:
 #pretrained model used: https://developers.google.com/edge/mediapipe/solutions/vision/hand_landmarker/index#models
@@ -8,17 +8,36 @@ import cv2 as cv
 import mediapipe as mp
 import os
 from mediapipe.tasks.python.vision import HandLandmarksConnections
+from simpleTraining import HandNN
 
+HERE = os.path.dirname(os.path.abspath(__file__))
 key_to_number_label = {
-    'closed' : 0.0,
-    'open' : 1.0,
-    'thumb_up' : 2.0,
-    'peace' : 3.0,
-    'ok' : 4.0,
-    'point' : 5.0,
-    'three' : 6.0,
-    'None'  : 7.0
+    'closed' : 0,
+    'open' : 1,
+    'thumb_up' : 2,
+    'peace' : 3,
+    'ok' : 4,
+    'point' : 5,
+    'three' : 6,
+    'None'  : 7
 }
+def load_model(model_path):
+    model = HandNN()
+    model.load_state_dict(torch.load(model_path, weights_only=True))
+    model.eval()
+    print('loaded succesfully')
+    return model
+def write_text(text,frame) -> None:
+    cv.putText(
+        frame, text, (10,30),
+        cv.FONT_HERSHEY_PLAIN,1,
+        (22,0,255),3)
+    cv.imshow
+    
+def predict(model, tensor):
+    with torch.no_grad():
+        return torch.argmax(model(tensor), dim=1).item()
+
 def saving_tensor(key, key_stroke, label, tensor, new_tensors):
     if not label in key_to_number_label:
         print('Label invalid')
@@ -84,8 +103,9 @@ def draw_hand(frame, result):
                 (255,255,255),1)
 
 def main():
-    pretrained_model_path = r'software\models\hand_landmarker.task'
-    file_name = r'software\multi-classification\data.pt'
+    model = load_model(os.path.join(HERE, 'model_mc.pt'))
+    pretrained_model_path = os.path.join(HERE, '..', 'models', 'hand_landmarker.task')
+    file_name = os.path.join(HERE, 'data.pt')
     loaded_tensor, new_tensors = load_tensors(file_name)
     cap, options = start_capture(pretrained_model_path)
 
@@ -103,7 +123,7 @@ def main():
                 draw_hand(frame, result)
                 tensor = saving_coordinates(result)
 
-                cv.imshow("Hand Landmarks", frame)
+                
                 key = cv.waitKey(1)
                 saving_tensor(key,'z','open',tensor,new_tensors)
                 saving_tensor(key,'x','closed',tensor,new_tensors)
@@ -115,6 +135,17 @@ def main():
                 saving_tensor(key,',','None',tensor,new_tensors)
                 if key == ord("q") or key == ord('Q'):
                     break
+                if tensor is not None:
+                    prediction = predict(model,tensor)
+                    # prediction is type int
+                    for key, value in key_to_number_label.items(): # This stops after first match
+                        if value == prediction:
+                            prediction = key
+                            break
+                    write_text(prediction,frame)
+                cv.imshow("Hand Landmarks", frame)
+                    
+                    
     finally:
         cap.release()
         cv.destroyAllWindows()
