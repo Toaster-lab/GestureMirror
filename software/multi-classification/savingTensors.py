@@ -18,15 +18,9 @@ key_to_number_label = {
     'peace' : 3,
     'ok' : 4,
     'point' : 5,
-    'three' : 6,
-    'None'  : 7
+    'None' : 6
 }
-def load_model(model_path):
-    model = HandNN()
-    model.load_state_dict(torch.load(model_path, weights_only=True))
-    model.eval()
-    print('loaded succesfully')
-    return model
+
 def write_text(text,frame) -> None:
     cv.putText(
         frame, text, (10,30),
@@ -34,11 +28,9 @@ def write_text(text,frame) -> None:
         (22,0,255),3)
     cv.imshow
     
-def predict(model, tensor):
-    with torch.no_grad():
-        return torch.argmax(model(tensor), dim=1).item()
 
-def saving_tensor(key, key_stroke, label, tensor, new_tensors):
+
+def saving_tensor(key, key_stroke, label, tensor, new_tensors) -> None:
     if not label in key_to_number_label:
         print('Label invalid')
     else:
@@ -58,11 +50,11 @@ def load_tensors(file_name):
         loaded_tensor = torch.reshape(example_tensor, (0,64)) #loading empty tensor with right shape
     else:
         loaded_tensor = torch.load(file_name, weights_only=True)
-        print('file loaded')
+        print('tensors loaded')
     new_tensors = []
     return loaded_tensor, new_tensors
 
-def saving_coordinates(result):
+def saving_coordinates(result) -> torch.Tensor | None:
     tensor  = None
     for hand in result.hand_landmarks:
         coordiante = []
@@ -103,7 +95,6 @@ def draw_hand(frame, result):
                 (255,255,255),1)
 
 def main():
-    model = load_model(os.path.join(HERE, 'model_mc.pt'))
     pretrained_model_path = os.path.join(HERE, '..', 'models', 'hand_landmarker.task')
     file_name = os.path.join(HERE, 'data.pt')
     loaded_tensor, new_tensors = load_tensors(file_name)
@@ -131,18 +122,9 @@ def main():
                 saving_tensor(key,'v','peace',tensor,new_tensors)
                 saving_tensor(key,'b','ok',tensor,new_tensors)
                 saving_tensor(key,'n','point',tensor,new_tensors)
-                saving_tensor(key,'m','three',tensor,new_tensors)
-                saving_tensor(key,',','None',tensor,new_tensors)
+                saving_tensor(key,'m','None',tensor,new_tensors)
                 if key == ord("q") or key == ord('Q'):
                     break
-                if tensor is not None:
-                    prediction = predict(model,tensor)
-                    # prediction is type int
-                    for key, value in key_to_number_label.items(): # This stops after first match
-                        if value == prediction:
-                            prediction = key
-                            break
-                    write_text(prediction,frame)
                 cv.imshow("Hand Landmarks", frame)
                     
                     

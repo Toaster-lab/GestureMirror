@@ -7,12 +7,14 @@ data_file = os.path.join(HERE, 'data.pt')
 model_file = os.path.join(HERE, 'model_mc.pt')
 
 #Hyperparamters:
-batch_size = 32
-test_size = 0.2
+batch_size : int = 4
+test_size : float = 0.2
 learning_rate : float = 0.01
 amout_of_epochs : int = 500
-num_of_classes : int = 8
-
+num_of_classes : int = 7
+saving_accuracy : float = 0.9
+list_loss : list = []
+list_iteration : list = []
 class HandNN(nn.Module):
     def __init__(self):
         super().__init__()
@@ -29,6 +31,22 @@ class HandNN(nn.Module):
 # Training state is created in setup() so that importing HandNN
 # (e.g. from savingTensors.py) has no side effects.
 model = entropy_loss = optimizer = train_loader = test_loader = None
+def show_evaluation(i, loss, train_acc, test_acc, ece_calibration):
+    print(f'iteration: {i}')
+    print(f'loss: {loss:.3f}')
+    print(f'train accuracy: {train_acc:.3f}')
+    print(f'test accuracy: {test_acc:.3f}')
+    print(f'ece: {ece_calibration:.3f}')
+    print("\n")
+    list_loss.append(loss)
+    list_iteration.append(i)
+
+def plot_loss_func():
+    import matplotlib.pyplot as plt
+    xpoints = list_loss
+    ypoints = list_iteration
+    plt.plot(ypoints,xpoints)
+    plt.show()
 
 def setup():
     global model, entropy_loss, optimizer, train_loader, test_loader
@@ -39,7 +57,7 @@ def setup():
         raise FileNotFoundError(f'No training data in {data_file}')
     data = torch.load(data_file, weights_only=True)
     X = data[:, :-1]
-    y = data[:, -1].long() #CrossEntropyLoss uses the label as index
+    y = data[:, -1].long() #CrossEntropyLoss uses the label as index -> int
 
     X_train, X_test, y_train, y_test = train_test_split(
         X, y, test_size=test_size, random_state=42, stratify=y
@@ -88,7 +106,7 @@ def single_iteration():
         optimizer.step()
     return loss.item()
 
-def trainingRun():
+def trainingRun() -> float:
     test_acc = 0.0
     for i in range(amout_of_epochs):
         loss = single_iteration()
@@ -96,18 +114,15 @@ def trainingRun():
             ece_calibration = ece(train_loader, 15)
             train_acc = accuracy(train_loader)
             test_acc = accuracy(test_loader)
-            print(f'iteration: {i}')
-            print(f'loss: {loss:.3f}')
-            print(f'train accuracy: {train_acc:.3f}')
-            print(f'test accuracy: {test_acc:.3f}')
-            print(f'ece: {ece_calibration:.3f}')
-            print("\n")
+            show_evaluation(i,loss,train_acc,test_acc,ece_calibration)
+    show_evaluation(i+1,loss,train_acc,test_acc,ece_calibration)
     return test_acc
 
 def main():
     setup()
     test_acc = trainingRun()
-    if test_acc >= 0.5:
+    plot_loss_func()
+    if test_acc >= saving_accuracy:
         saving_model()
 
 
