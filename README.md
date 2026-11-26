@@ -53,5 +53,6 @@ You can just experiment with this if you want without the robotic hand!
 ## Wiring diagram
 ![alt text](cad/photos/wiring_diagram.png)
 
+Make with: [Circuit diagram website](https://www.circuit-diagram.org/editor/)
 ## AI DISCLOSURE
 I used AI for research, learning faster, feedback and helping with file paths. For example instead of searching for the proper documentation on something I am trying to learn / fix, I ask Claude to help me understand the Error message and give me in one of my cases, the real documentation of PyTorch of this topic so I can fix this myself. Code or text was NOT written with AI. AI was used for the math side of things when designing the hand! Using AI responsible and not just vibe coding was a big goal of this project and coding is way more fun  by hand! I also used AI to help me with measurements, it was my first CAD project and sometimes was really stuck just on the measurements and it helped me move forward.
