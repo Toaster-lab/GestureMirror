@@ -1,14 +1,13 @@
-﻿Item Name,Quantity,Link,Unit Price (USD),Already owned,Notes
-ESP32-S3 DevKit,1,https://www.berrybase.ch/espressif-esp32-s3-devkitc-1-development-kit-esp32-s3-wroom-wifi-bluetooth-le-240mhz-5v-3-3v/ram-8mb/flash-16mb,0,yes,Really solid ESP32
-Micro servo MG90S,5,https://www.bastelgarage.ch/waveshare-micro-servo-mg90s-with-metal-gear?search=servo%20mg90s,9.72,no,"1 for each finger, no spares"
-Power supply,1,https://www.conrad.ch/de/p/mean-well-gsm25e05-p1j-steckernetzteil-festspannung-5-v-dc-4-a-20-w-1838021.html,19.62,no,"Servos need external power supply, do NOT use ESP32 5V"
-DC barrel jack (female),1,https://www.galaxus.ch/en/s1/product/purecrea-dc-buchse-female-barrel-jack-55mm-21mm-mit-schraubklemmen-cables-plugs-34239719,12.18,no,To connect breadboard to powersupply
-Capacitor,1,https://www.digitec.ch/de/s1/product/purecrea-elektrolyt-kondensator-1000-f-25-v-kondensator-passive-bauelemente-36133402,7.26,no,Place across 5 V and GND near the servos to smooth out current
-Floss,1,https://www.galaxus.ch/de/s6/product/oral-b-oral-b-essential-floss-50m-waxed-50-m-zahnseide-67017669,0,yes,Cheapest string I can use that is reliable and I tested strenght.
+Item Name,Quantity,Link,Unit Price (USD),Already owned,Notes
+ESP32-S3 DevKit,1,https://www.berrybase.ch/espressif-esp32-s3-devkitc-1-development-kit-esp32-s3-wroom-wifi-bluetooth-le-240mhz-5v-3-3v/ram-8mb/flash-16mb,0,yes,"Really solid ESP32, talks to the servo driver over I2C"
+Micro servo MG90 (Coscorp Industries),5,https://www.galaxus.ch/en/s5/product/coscorp-industries-microservo-mg90-180-grad-rc-servos-71225813,11.07,no,"1 for each finger, no spares. Metal gears. CHF 45 for 5 with quantity discount"
+PCA9685 16-channel PWM servo driver (Purecrea),1,https://www.galaxus.ch/en/s1/product/purecrea-16-channel-pwm-servo-driver-i2c-pca9685-single-board-computer-kits-36169149,26.94,no,"Drives all 5 servos over I2C, servo power goes in through its screw terminal (V+), logic VCC from ESP32 3.3 V"
+Power supply Odroid 5V 4A EU,1,https://www.galaxus.ch/en/s1/product/odroid-power-supply-5v-4a-eu-for-xu4hc1-power-supply-electronics-supplies-casing-13158297,13.16,no,"Servos need external power supply, do NOT use ESP32 5V. 4 A covers 5 servos plus the ESP32"
+DC barrel jack (female),1,https://www.galaxus.ch/en/s1/product/purecrea-dc-buchse-female-barrel-jack-55mm-21mm-mit-schraubklemmen-cables-plugs-34239719,12.18,no,To connect the power supply to the servo driver and ESP32
+Capacitor 1000 µF 25 V,1,https://www.galaxus.ch/de/s1/product/purecrea-elektrolyt-kondensator-1000-f-25-v-kondensator-passive-bauelemente-36133402,7.26,no,Place across V+ and GND at the servo driver to smooth out current spikes
+Floss,1,https://www.galaxus.ch/de/s6/product/oral-b-oral-b-essential-floss-50m-waxed-50-m-zahnseide-67017669,0,yes,Cheapest string I can use that is reliable and I tested strength.
 Elastic cord,1,https://www.galaxus.ch/en/s12/product/creativ-company-elastic-band-set-1-mm-craft-tape-craft-twine-10079047,7.38,no,To straighten out finger again
-breadboard,1,https://www.bastelgarage.ch/breadboard-hole-grid-plug-in-board-half-size?search=breadboard,6.03,no,I need a smaller breadboard to connect all my components
-PETG filament (326 g sliced + 15% margin),1,https://www.galaxus.ch/de/s1/product/bambu-lab-petg-basic-yellow-175mm-petg-1000-g-175-mm-filament-52436109,9.10,no,I choose PETG because it is tougher and doesn't melt as easily 
+Breadboard,1,https://www.bastelgarage.ch/breadboard-hole-grid-plug-in-board-half-size?search=breadboard,0,yes,"For signal wiring only, servo current does not run through it"
+PETG filament,1,https://www.galaxus.ch/de/s1/product/bambu-lab-petg-basic-yellow-175mm-petg-1000-g-175-mm-filament-52436109,0,yes,"326 g sliced + 15% margin. PETG because it is tougher and doesn't melt as easily"
 Jumper wires,1,https://www.digitec.ch/de/s1/product/oem-jumperkabel-elektronikkabel-stecker-5997852,0,yes,"To wire everything on the breadboard, generic wire"
-Shipping Bastelgarage,1,https://www.bastelgarage.ch/delivery-shipping-costs,8.49,no,PostPac Economy
-Shipping Conrad,1,https://www.conrad.ch,12.24,no,Standard delivery
-Shipping Galaxus / Digitec,1,https://www.galaxus.ch,0,no,Check at checkout
+Shipping Galaxus,1,https://www.galaxus.ch,0,no,Free shipping on orders over CHF 50 (order is about CHF 99)

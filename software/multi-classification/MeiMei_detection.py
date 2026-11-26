@@ -1,9 +1,13 @@
 #dependecies:
 #pretrained model used: https://developers.google.com/edge/mediapipe/solutions/vision/hand_landmarker/index#models
+import sys
+from pathlib import Path
 import torch
 import cv2 as cv
 import mediapipe as mp
 from mediapipe.tasks.python.vision import HandLandmarksConnections
+# SAM_optimizer.py lives one folder up, in software/
+sys.path.append(str(Path(__file__).resolve().parents[1]))
 from SAM_optimizer import SAMClassification
 
 MEIMEI_WINDOW = 'Mei Mei says HII!!!'
