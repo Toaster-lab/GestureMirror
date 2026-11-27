@@ -52,7 +52,7 @@ def start_capture(pretrained_model):
         raise RuntimeError('Cam could not open')
     options = mp.tasks.vision.HandLandmarkerOptions(
         base_options = mp.tasks.BaseOptions(model_asset_path = pretrained_model),
-        num_hands = 1 #changed to one because it bugged before and for my hand I only need one
+        num_hands = 2 #changed to one because it bugged before and for my hand I only need one
     )
     return cap, options
 
