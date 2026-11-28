@@ -9,7 +9,7 @@ Total build cost: *122.27 USD* (see [bom.csv](bom.csv), parts I own is 0)
 
 ## CAD
 * Onshape source (full assembly): [Gesture Mirror on Onshape](https://cad.onshape.com/documents/99f95db162691b3338d57be9/w/9e07927d1d81c1273d6c15ce/e/b8d432711753583c9f4cbdb4)
-* STEP files: [cad/step](cad/step)
+* STEP files: [cad/step](cad/step) - they could be outdated, because of design improvements that happen frequently, please take the online version as the most recent version!!
 
 ## How it was made
 This project was made using Onshape on the CAD side of things, there where many research papers read about maschine learning to apply that to my own model and the core software is Python and C++ for the ESP32 control. 
